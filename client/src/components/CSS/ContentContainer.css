@@ -1,9 +1,0 @@
-.contentContainer {
-    background-image: url('../../images/pepperswider.jpg');
-    background-size: cover;
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: center;
-    text-align: center;
-}
