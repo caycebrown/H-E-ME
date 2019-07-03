@@ -9,11 +9,12 @@ class App extends React.Component {
       data: [1,2,3,4],
       storeId: null,
       selectedItems: [],
-      items: []
+      items: [],
+      aisles: []
     };
   };
 
-
+  //Retrieves all items from the database and returns the "name" column for each
   getItems = () => {
     fetch('/api/items')
       .then(res => res.json())
@@ -21,7 +22,7 @@ class App extends React.Component {
       console.log(this.state.items);
   }
 
-
+  //Sets a store id in state that will be used to query the database
   selectStore = (e) => {
     let store = e.target.value;
     this.setState({storeId: store});
@@ -29,7 +30,7 @@ class App extends React.Component {
   };
 
 
-
+  //Add's the selected item to state and removes it if it already exists there
   addItem = item => {
     if(this.state.selectedItems.includes(item)){
       let index = this.state.selectedItems.indexOf(item);
@@ -52,6 +53,24 @@ class App extends React.Component {
     
   };
 
+  //
+  submitList = () => {
+    const selectedItems = this.state.selectedItems;
+    console.log(selectedItems);
+      fetch(`/api/complete`, {
+      method: "POST",
+      body: JSON.stringify(selectedItems),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json())
+      .then(res => console.log(res))
+    }
+
+
+  
+
+
   componentDidMount() {
     this.getItems()
   }
@@ -68,7 +87,8 @@ class App extends React.Component {
                                         items={this.state.items} 
                                         selectStore={this.selectStore}
                                         addItem={this.addItem}
-                                        selectedItems={this.state.selectedItems}/>}/>
+                                        selectedItems={this.state.selectedItems}
+                                        submitList={this.submitList}/>}/>
                                   
         </Switch>
       </Router>

@@ -20,6 +20,7 @@ class Shop extends React.Component {
                     <option value="1" data-name="Canyon Ridge">Canyon Ridge</option>
                     <option value="3" data-name="Round Rock">Round Rock</option>
                     </select>
+
                     <div id="main-row">
                         <div id="scroller">
                             {this.props.items.map(item => (
@@ -27,11 +28,17 @@ class Shop extends React.Component {
                                 <input type="checkbox" value={item} onClick={event => this.props.addItem(event.target.value)} />&nbsp;{item}
                             </div>))}
                         </div>
+
                         <div id="user-list">
-                            {this.props.selectedItems.map(item => (<div>
-                                <p key={item}>{item}</p>
-                            </div>))}
+                            {this.props.selectedItems.map(item => 
+                                (<div>
+                                    <p key={item}>{item}</p>
+                                </div>))}
                         </div>
+                    </div>
+
+                    <div>
+                        <button  id="submit-button" onClick={this.props.submitList}>Submit List</button>
                     </div>
                 </div>
             </div>

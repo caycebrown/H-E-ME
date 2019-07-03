@@ -16,7 +16,8 @@ class Main extends React.Component {
                 selectStore={this.props.selectStore}
                 addItem={this.props.addItem}
                 selectedItems={this.props.selectedItems}
-                items={this.props.items} />
+                items={this.props.items} 
+                submitList={this.props.submitList}/>
           <Footer />
         </Wrapper>
       )
