@@ -16,28 +16,35 @@ router.get('/items', (req, res) => {
 
 
 
-router.post('/complete', (req, res) => {
+router.post('/complete', async (req, res) => {
   const list = req.body;
-  let aisleArr = [];
+  
   console.log('req.body = ' + list[0])
+  
+  
   list.map(item =>
     db.item.findAll({
       where: {'$item.name$': item}
       })
-      .then(data => data.map( data => 
-        db.aisle.findAll({
-          where: {'$aisle.id$': data.dataValues.aisleId, '$aisle.storeId$': 2}
-        }).then( result => { 
-          if(result[0]){
-            aisleArr.push(result[0].name)
-            console.log('here' + result[0].name)
-            return aisleArr;
-          }else{
-            console.log('no match')}})
-        ) 
+      .then(data => 
+        data.map( newData => 
+          db.aisle.findAll({
+            where: {'$aisle.id$': newData.dataValues.aisleId, '$aisle.storeId$': 2}
+          }).then( result => { 
+            if (result[0]) {
+              /*aisleArr.push(result[0].name)*/
+              console.log('here' + result[0].name)
+              aisleArr.push(result[0].name)
+              return result[0].name;
+            } else {
+              console.log('no match');
+            }
+          })
+          ) 
+        )
       )
-    )
-res.send(aisleArr)
+      const finalArr = await Promise.all(aisleArr)
+  res.json(finalArr)
 });
 
 

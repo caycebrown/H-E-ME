@@ -1,23 +1,19 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	const item =  sequelize.define('item', {
-		
+	return sequelize.define('item', {
+		id: {
+			type: DataTypes.INTEGER(10),
+			allowNull: false,
+			primaryKey: true,
+			field: 'id'
+		},
 		name: {
-			type: DataTypes.STRING(30),
+			type: DataTypes.STRING(50),
 			allowNull: false,
 			field: 'name'
 		}
 	}, {
 		tableName: 'item'
-  });
-  
-  item.associate = function (models) {
-    item.belongsTo(models.aisle, {
 	});
-	item.belongsTo(models.item_name, {
-    });
-  };
-
-  return item;
 };
